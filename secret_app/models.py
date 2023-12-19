@@ -17,7 +17,7 @@ class QuestionModel(models.Model):
 
 
 class CommentModel(models.Model):
-    question = models.ForeignKey(QuestionModel, related_name='comments', on_delete=models.CASCADE)
+    the_question = models.ForeignKey(QuestionModel, related_name='comments', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField()
     datetime = models.DateTimeField(auto_now_add=True)
