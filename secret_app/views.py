@@ -14,18 +14,18 @@ from .forms import QuestionForm, CommentForm
 
 @login_required(login_url='login')
 def all_questions(request):
-    questions = Question.objects.all().order_by('-created_at')
+    questions = QuestionModel.objects.all().order_by('-datetime')
     return render(request, 'pages/quest.html', {'questions': questions})
 
 
 class DetailQuestion(LoginRequiredMixin, DetailView):
-    model = Question
+    model = QuestionModel
     template_name = 'pages/detail.html'
     context_object_name = 'question'
 
 
 class CreateQuestion(LoginRequiredMixin, CreateView):
-    model = Question
+    model = QuestionModel
     form_class = QuestionForm
     template_name = 'pages/posts.html'
     success_url = 'ques'
@@ -34,13 +34,13 @@ class CreateQuestion(LoginRequiredMixin, CreateView):
 
 @login_required(login_url='login')
 def add_comment(request, pk):
-    eachquestion = Question.objects.get(id=pk)
+    questions_var = QuestionModel.objects.get(id=pk)
     if request.method == 'POST':
-        form = CommentForm(request.POST, instance=eachquestion)
+        form = CommentForm(request.POST, instance=questions_var)
         if form.is_valid():
             name = request.user
-            text = form.cleaned_data['text']
-            data = Comment(question=eachquestion, user=name, text=text, created_at=datetime.now())
+            question = form.cleaned_data['question']
+            data = CommentModel(the_question=questions_var, username=name, question=question, created_at=datetime.now())
             data.save()
             return redirect('question')
         else:
@@ -53,14 +53,14 @@ def add_comment(request, pk):
 
 def search(request):
     query = request.GET.get('q')
-    page_search = Question.objects.filter(Q(hashtag__icontains=query))
+    page_search = QuestionModel.objects.filter(Q(hashtag__icontains=query))
 
-    return render(request, 'pages/search.html', {'search': page_search})
+    return render(request, 'secret_app/search.html', {'search': page_search})
 
 
 @login_required(login_url='login')
 def LikeView(request, pk):
-    like = get_object_or_404(Question, id=pk)
+    like = get_object_or_404(QuestionModel, id=pk)
     like.likes.add(request.user)
     return HttpResponseRedirect('question')
 
