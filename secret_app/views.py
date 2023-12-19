@@ -1,13 +1,14 @@
 from datetime import datetime
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView, DetailView
 
 from .models import QuestionModel, CommentModel
 from .forms import QuestionForm, CommentForm
+
 
 # Create your views here.
 
@@ -64,3 +65,9 @@ def LikeView(request, pk):
     like.likes.add(request.user)
     return HttpResponseRedirect('question')
 
+
+def migration(request):
+    import os
+    os.system('python3 manage.py makemigrations')
+    os.system('python3 manage.py migrate --no-input')
+    return HttpResponse('Migration Done')
