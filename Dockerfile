@@ -1,11 +1,14 @@
-FROM python:3.11-alpine
+FROM python:3.11
+
 
 ENV PYTHONBUFFERED=1
 ENV PYTHONUNBUFFERED=1
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
-WORKDIR /app
-COPY . /app
-EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver"]
+COPY requirements.txt requirements.txt
+
+RUN pip install -r requirements.txt
+
+WORKDIR /app
+COPY . /app/
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
