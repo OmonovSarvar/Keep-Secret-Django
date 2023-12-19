@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'secret_app/base.html' %}
 
-</body>
-</html>
+{% block heading %}
+    <title>Add Comment</title>
+    <style>
+        h1 {
+            position: relative;
+            left: 40%;
+        }
+    </style>
+{% endblock heading %}
+
+
+{% block content %}
+    <h1>Add Comment</h1>
+    <h4>{{ question.text }}</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Comment</button>
+    </form>
+{% endblock content %}

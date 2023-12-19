@@ -2,9 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="https://kit.fontawesome.com/d5b5e10b1b.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    {% block heading %} {% endblock heading %}
+    <style>
+        nav, ul {
+            display: flex;
+            flex-direction: row;
+            width: 50%;
+            margin: 20px auto;
+            justify-content: space-between;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .nav_link {
+            text-decoration: none;
+            color: #000;
+
+        }
+    </style>
 </head>
 <body>
-
+<form action="{% url 'search' %}" method="GET">
+                  {% csrf_token %}
+        <input class="search" style="height:36px;width:400px;text-align:center;margin:20px 14px;margin-left:300px;border-radius:8px;" type="text" name="q" placeholder="Hashtag orqali qidiruv">
+  <button class="btn btn-success"  style="height:40px;width:110px;margin-bottom:5px;" type="submit">Search</button>
+      </form>
+<nav>
+    <ul class="nav_bar">
+      <li class="nav_item"><a class="nav_link" href="{% url 'question' %}">Home</a></li>
+      {% if user.is_authenticated %}
+          <li class="nav_item"><a class="nav_link" href="{% url 'logout' %}">Logout</a></li>
+      {% else %}
+      <li class="nav_item"><a class="nav_link" href="{% url 'login' %}">Login</a></li>
+      {% endif %}
+    </ul>
+</nav>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    {% block content %} {% endblock content %}
 </body>
 </html>
