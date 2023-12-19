@@ -8,6 +8,8 @@ django = "==4.2"
 psycopg2-binary = "*"
 whitenoise = "*"
 selenium = "*"
+crispy-bootstrap5 = "*"
+pillow = "*"
 
 [dev-packages]
 

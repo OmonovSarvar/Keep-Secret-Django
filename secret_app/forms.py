@@ -12,4 +12,4 @@ class QuestionForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = CommentModel
-        fields = ['commit']
+        fields = ['comment']
