@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'secret_app/base.html' %}
+{% load crispy_forms_tags %}
 
-</body>
-</html>
+{% block header %}
+    <title>@{{ user.profile }}</title>
+{% endblock %}
+
+{% block content %}
+    <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="" height="80" width="80" style="object-fit: cover;margin:auto;display: block" >
+    <h1>@{{ user.username }}</h1>
+{% endblock %}

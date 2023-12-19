@@ -15,19 +15,19 @@ from .forms import QuestionForm, CommentForm
 @login_required(login_url='login')
 def all_questions(request):
     questions = QuestionModel.objects.all().order_by('-datetime')
-    return render(request, 'pages/quest.html', {'questions': questions})
+    return render(request, 'secret_app/question.html', {'questions': questions})
 
 
 class DetailQuestion(LoginRequiredMixin, DetailView):
     model = QuestionModel
-    template_name = 'pages/detail.html'
+    template_name = 'secret_app/detail.html'
     context_object_name = 'question'
 
 
 class CreateQuestion(LoginRequiredMixin, CreateView):
     model = QuestionModel
     form_class = QuestionForm
-    template_name = 'pages/posts.html'
+    template_name = 'secret_app/add_question.html'
     success_url = 'ques'
     login_url = 'login'
 
@@ -48,7 +48,7 @@ def add_comment(request, pk):
     else:
         form = CommentForm()
 
-    return render(request, 'pages/add_comment.html', {'form': form})
+    return render(request, 'secret_app/comment.html', {'form': form})
 
 
 def search(request):

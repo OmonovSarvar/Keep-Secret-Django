@@ -1,10 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'secret_app/base.html' %}
+{% load crispy_forms_tags %}
 
-</body>
-</html>
+{% block header %}
+    <title>Sign Up</title>
+    <style>
+        .post_form {
+            width: 45%;
+            margin: auto;
+        }
+        h1 {
+            position: relative;
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>Sign Up</h1>
+    <form class="post_form" method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-outline-success">Sign Up</button>
+    </form>
+{% endblock %}
