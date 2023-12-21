@@ -11,6 +11,6 @@
     <form method="POST" class="post_form">
         {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="btn btn-outline-success">Login</button>
+        <button type="submit" class="btn btn-outline-success"><a href="{% url 'popular_question' %}" >Login</a></button>
     </form>
 {% endblock %}

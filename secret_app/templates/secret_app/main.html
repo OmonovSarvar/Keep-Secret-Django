@@ -1,0 +1,26 @@
+{% extends 'secret_app/base.html' %}
+
+{% block heading %}
+    <title>
+        KeepSecret
+    </title>
+{% endblock heading %}
+
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <strong><h1>Popular questions</h1></strong>
+        {% for obj in qs %}
+            <h3>{{ obj.user }}</h3>
+            <h2>
+                {{ obj.question }}
+            </h2>
+            <p>
+                {{ obj.liked }}
+            </p>
+        {% endfor %}
+    {% else %}
+        <h1>Bro you are anonymous</h1>
+    {% endif %}
+{% endblock content %}
+

@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 
 
 class QuestionModel(models.Model):
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     question = models.TextField()
     hashtag = models.CharField(max_length=50)
-    likes = models.ManyToManyField(User, related_name='tweet_like')
+    liked = models.ManyToManyField(User, default=None, blank=True, related_name='like')
+    updated = models.DateTimeField(auto_now=True)
     datetime = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -14,6 +15,10 @@ class QuestionModel(models.Model):
 
     def __str__(self):
         return self.question
+
+    @property
+    def num_likes(self):
+        return self.liked.all().count()
 
 
 class CommentModel(models.Model):
@@ -27,3 +32,19 @@ class CommentModel(models.Model):
 
     def __str__(self):
         return self.comment
+
+
+CHOICE_LIKE = (
+    ('Like', 'Like'),
+    ('Unlike', 'Unlike')
+)
+
+
+class LikeModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(QuestionModel, on_delete=models.CASCADE)
+    value = models.CharField(choices=CHOICE_LIKE, default='Like', max_length=10)
+
+    def __str__(self):
+        return self.user
+

@@ -60,10 +60,25 @@ def search(request):
 
 
 @login_required(login_url='login')
-def LikeView(request, pk):
+def LikeButton(request, pk):
     like = get_object_or_404(QuestionModel, id=pk)
     like.likes.add(request.user)
     return HttpResponseRedirect('question')
+
+
+@login_required(login_url='login')
+def popular_questions(request):
+    questions = QuestionModel.objects.all().order_by('-datetime')
+    user = request.user
+    context = {
+        'questions': questions,
+        'user': user
+    }
+    print(questions)
+    # if questions.liked.count() > 10:
+    #     return render(request, 'secret_app/main.html', context)
+
+    return render(request, 'secret_app/main.html', context)
 
 
 def migration(request):
